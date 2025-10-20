@@ -1,0 +1,86 @@
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# Visual Studio cache/options
+.vs/
+.vscode/
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Rider
+.idea/
+*.sln.iml
+
+# NuGet
+*.nupkg
+*.snupkg
+.nuget/
+
+# IMPORTANT: Configuration & Secrets - NEVER COMMIT
+appsettings.Development.json
+appsettings.Development.json.template
+appsettings.Production.json
+appsettings.*.json
+*.env
+.env
+.env.local
+.env.*.local
+user-secrets.json
+secrets.json
+
+# Connection strings and sensitive data
+connectionstrings.config
+web.config
+
+# Docker secrets
+.dockerenv
+*.pem
+*.key
+
+# IDE
+.idea/
+.vs/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Test Results
+TestResults/
+*.trx
+*.coverage
+
+# Logs
+*.log
+
+# Temporary files
+tmp/
+temp/
+*.tmp

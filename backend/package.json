@@ -1,0 +1,18 @@
+# This file is not used for .NET Core backend
+# See the .csproj files in each microservice directory instead
+
+Backend is built with:
+- .NET 8.0 (C#)
+- ASP.NET Core
+- Entity Framework Core
+- PostgreSQL
+
+For .NET project setup, see individual service directories:
+- AuthAPI/AuthAPI.csproj
+- UserAPI/UserAPI.csproj
+- ProductAndCategoryAPI/ProductAndCategoryAPI.csproj
+- CartAPI/CartAPI.csproj
+- OrderAPI/OrderAPI.csproj
+- FeedbackAPI/FeedbackAPI.csproj
+- NotificationAPI/NotificationAPI.csproj
+- Gateway/Gateway.csproj
