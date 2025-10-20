@@ -1,0 +1,72 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31919.166
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gateway", "Gateway\Gateway.csproj", "{A1B2C3D4-E5F6-47G8-H9I0-J1K2L3M4N5O6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthAPI", "AuthAPI\AuthAPI.csproj", "{B1C2D3E4-F5G6-47H8-I9J0-K1L2M3N4O5P6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserAPI", "UserAPI\UserAPI.csproj", "{C1D2E3F4-G5H6-47I8-J9K0-L1M2N3O4P5Q6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductAndCategoryAPI", "ProductAndCategoryAPI\ProductAndCategoryAPI.csproj", "{D1E2F3G4-H5I6-47J8-K9L0-M1N2O3P4Q5R6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CartAPI", "CartAPI\CartAPI.csproj", "{E1F2G3H4-I5J6-47K8-L9M0-N1O2P3Q4R5S6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderAPI", "OrderAPI\OrderAPI.csproj", "{F1G2H3I4-J5K6-47L8-M9N0-O1P2Q3R4S5T6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FeedbackAPI", "FeedbackAPI\FeedbackAPI.csproj", "{G1H2I3J4-K5L6-47M8-N9O0-P1Q2R3S4T5U6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NotificationAPI", "NotificationAPI\NotificationAPI.csproj", "{H1I2J3K4-L5M6-47N8-O9P0-Q1R2S3T4U5V6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedDTOs", "SharedDTOs\SharedDTOs.csproj", "{I1J2K3L4-M5N6-47O8-P9Q0-R1S2T3U4V5W6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedServices", "SharedServices\SharedServices.csproj", "{J1K2L3M4-N5O6-47P8-Q9R0-S1T2U3V4W5X6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A1B2C3D4-E5F6-47G8-H9I0-J1K2L3M4N5O6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1B2C3D4-E5F6-47G8-H9I0-J1K2L3M4N5O6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1B2C3D4-E5F6-47G8-H9I0-J1K2L3M4N5O6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1B2C3D4-E5F6-47G8-H9I0-J1K2L3M4N5O6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1C2D3E4-F5G6-47H8-I9J0-K1L2M3N4O5P6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1C2D3E4-F5G6-47H8-I9J0-K1L2M3N4O5P6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1C2D3E4-F5G6-47H8-I9J0-K1L2M3N4O5P6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1C2D3E4-F5G6-47H8-I9J0-K1L2M3N4O5P6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1D2E3F4-G5H6-47I8-J9K0-L1M2N3O4P5Q6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1D2E3F4-G5H6-47I8-J9K0-L1M2N3O4P5Q6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1D2E3F4-G5H6-47I8-J9K0-L1M2N3O4P5Q6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1D2E3F4-G5H6-47I8-J9K0-L1M2N3O4P5Q6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1E2F3G4-H5I6-47J8-K9L0-M1N2O3P4Q5R6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1E2F3G4-H5I6-47J8-K9L0-M1N2O3P4Q5R6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1E2F3G4-H5I6-47J8-K9L0-M1N2O3P4Q5R6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1E2F3G4-H5I6-47J8-K9L0-M1N2O3P4Q5R6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1F2G3H4-I5J6-47K8-L9M0-N1O2P3Q4R5S6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1F2G3H4-I5J6-47K8-L9M0-N1O2P3Q4R5S6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1F2G3H4-I5J6-47K8-L9M0-N1O2P3Q4R5S6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1F2G3H4-I5J6-47K8-L9M0-N1O2P3Q4R5S6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1G2H3I4-J5K6-47L8-M9N0-O1P2Q3R4S5T6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1G2H3I4-J5K6-47L8-M9N0-O1P2Q3R4S5T6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1G2H3I4-J5K6-47L8-M9N0-O1P2Q3R4S5T6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1G2H3I4-J5K6-47L8-M9N0-O1P2Q3R4S5T6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{G1H2I3J4-K5L6-47M8-N9O0-P1Q2R3S4T5U6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{G1H2I3J4-K5L6-47M8-N9O0-P1Q2R3S4T5U6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{G1H2I3J4-K5L6-47M8-N9O0-P1Q2R3S4T5U6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{G1H2I3J4-K5L6-47M8-N9O0-P1Q2R3S4T5U6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{H1I2J3K4-L5M6-47N8-O9P0-Q1R2S3T4U5V6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{H1I2J3K4-L5M6-47N8-O9P0-Q1R2S3T4U5V6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{H1I2J3K4-L5M6-47N8-O9P0-Q1R2S3T4U5V6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{H1I2J3K4-L5M6-47N8-O9P0-Q1R2S3T4U5V6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{I1J2K3L4-M5N6-47O8-P9Q0-R1S2T3U4V5W6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{I1J2K3L4-M5N6-47O8-P9Q0-R1S2T3U4V5W6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{I1J2K3L4-M5N6-47O8-P9Q0-R1S2T3U4V5W6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{I1J2K3L4-M5N6-47O8-P9Q0-R1S2T3U4V5W6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{J1K2L3M4-N5O6-47P8-Q9R0-S1T2U3V4W5X6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{J1K2L3M4-N5O6-47P8-Q9R0-S1T2U3V4W5X6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{J1K2L3M4-N5O6-47P8-Q9R0-S1T2U3V4W5X6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{J1K2L3M4-N5O6-47P8-Q9R0-S1T2U3V4W5X6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
