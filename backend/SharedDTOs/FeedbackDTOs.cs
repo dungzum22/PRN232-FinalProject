@@ -41,3 +41,4 @@ public class ProductReviewSummaryDTO
     public int OneStarCount { get; set; }
     public List<FeedbackDTO> TopReviews { get; set; } = new();
 }
+

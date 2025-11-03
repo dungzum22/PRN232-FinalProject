@@ -66,3 +66,4 @@ public static class ApiStatusCodes
     public const int Conflict = 409;
     public const int InternalServerError = 500;
 }
+

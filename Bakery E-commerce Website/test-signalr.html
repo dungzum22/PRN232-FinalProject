@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignalR Test Client</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .connected {
+            background: #d4edda;
+            color: #155724;
+        }
+        .disconnected {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        .reconnecting {
+            background: #fff3cd;
+            color: #856404;
+        }
+        .form-group {
+            margin: 20px 0;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-right: 10px;
+            margin-top: 10px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .danger {
+            background: #dc3545;
+        }
+        .danger:hover {
+            background: #c82333;
+        }
+        .logs {
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 15px;
+            margin-top: 20px;
+            max-height: 400px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+        }
+        .log-entry {
+            margin: 5px 0;
+            padding: 5px;
+            border-left: 3px solid #007bff;
+            padding-left: 10px;
+        }
+        .log-error {
+            border-left-color: #dc3545;
+            color: #dc3545;
+        }
+        .log-success {
+            border-left-color: #28a745;
+            color: #28a745;
+        }
+        .log-info {
+            border-left-color: #17a2b8;
+            color: #17a2b8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔔 SignalR Notification Test Client</h1>
+        
+        <div id="status" class="status disconnected">
+            Status: Disconnected
+        </div>
+
+        <div class="form-group">
+            <label for="hubUrl">Hub URL:</label>
+            <input type="text" id="hubUrl" value="http://localhost:5000/hubs/notifications">
+        </div>
+
+        <div class="form-group">
+            <label for="userId">User ID:</label>
+            <input type="number" id="userId" value="1" placeholder="Enter user ID">
+        </div>
+
+        <div class="form-group">
+            <label for="token">Access Token (optional):</label>
+            <input type="text" id="token" placeholder="Enter access token if required">
+        </div>
+
+        <div>
+            <button id="connectBtn" onclick="connect()">Connect</button>
+            <button id="disconnectBtn" onclick="disconnect()" disabled>Disconnect</button>
+            <button onclick="clearLogs()">Clear Logs</button>
+        </div>
+
+        <hr style="margin: 30px 0;">
+
+        <h3>Send Test Notification</h3>
+        
+        <div class="form-group">
+            <label for="targetUserId">Target User ID:</label>
+            <input type="number" id="targetUserId" value="1">
+        </div>
+
+        <div class="form-group">
+            <label for="message">Message:</label>
+            <textarea id="message" rows="3" placeholder="Enter notification message">Test notification from SignalR test client</textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="notifType">Type:</label>
+            <select id="notifType">
+                <option value="info">Info</option>
+                <option value="order">Order</option>
+                <option value="promo">Promo</option>
+                <option value="system">System</option>
+            </select>
+        </div>
+
+        <div>
+            <button id="sendBtn" onclick="sendNotification()" disabled>Send Notification</button>
+        </div>
+
+        <div class="logs" id="logs">
+            <div class="log-entry log-info">Logs will appear here...</div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@microsoft/signalr@8.0.7/dist/browser/signalr.min.js"></script>
+    <script>
+        let connection = null;
+
+        function log(message, type = 'info') {
+            const logs = document.getElementById('logs');
+            const entry = document.createElement('div');
+            entry.className = `log-entry log-${type}`;
+            const timestamp = new Date().toLocaleTimeString();
+            entry.textContent = `[${timestamp}] ${message}`;
+            logs.appendChild(entry);
+            logs.scrollTop = logs.scrollHeight;
+        }
+
+        function updateStatus(status, className) {
+            const statusEl = document.getElementById('status');
+            statusEl.textContent = `Status: ${status}`;
+            statusEl.className = `status ${className}`;
+        }
+
+        function updateButtons(connected) {
+            document.getElementById('connectBtn').disabled = connected;
+            document.getElementById('disconnectBtn').disabled = !connected;
+            document.getElementById('sendBtn').disabled = !connected;
+        }
+
+        async function connect() {
+            try {
+                const hubUrl = document.getElementById('hubUrl').value;
+                const userId = document.getElementById('userId').value;
+                const token = document.getElementById('token').value;
+
+                log('Creating connection...', 'info');
+
+                const options = {
+                    skipNegotiation: false,
+                    transport: signalR.HttpTransportType.WebSockets | signalR.HttpTransportType.LongPolling
+                };
+
+                if (token) {
+                    options.accessTokenFactory = () => token;
+                }
+
+                connection = new signalR.HubConnectionBuilder()
+                    .withUrl(hubUrl, options)
+                    .withAutomaticReconnect()
+                    .configureLogging(signalR.LogLevel.Information)
+                    .build();
+
+                // Event handlers
+                connection.onreconnecting(() => {
+                    log('Reconnecting...', 'info');
+                    updateStatus('Reconnecting', 'reconnecting');
+                });
+
+                connection.onreconnected(() => {
+                    log('Reconnected successfully', 'success');
+                    updateStatus('Connected', 'connected');
+                });
+
+                connection.onclose(() => {
+                    log('Connection closed', 'error');
+                    updateStatus('Disconnected', 'disconnected');
+                    updateButtons(false);
+                });
+
+                // Listen for notifications
+                connection.on('ReceiveNotification', (notification) => {
+                    log(`📬 Received notification: ${JSON.stringify(notification)}`, 'success');
+                    alert(`New Notification!\n\nMessage: ${notification.message}\nType: ${notification.type}`);
+                });
+
+                // Start connection
+                log('Starting connection...', 'info');
+                await connection.start();
+                log('✅ Connected successfully!', 'success');
+                updateStatus('Connected', 'connected');
+                updateButtons(true);
+
+                // Join user group
+                if (userId) {
+                    log(`Joining user group: user-${userId}`, 'info');
+                    await connection.invoke('JoinUserGroup', parseInt(userId));
+                    log(`✅ Joined user group successfully`, 'success');
+                }
+
+            } catch (err) {
+                log(`❌ Connection error: ${err.message}`, 'error');
+                updateStatus('Disconnected', 'disconnected');
+                updateButtons(false);
+            }
+        }
+
+        async function disconnect() {
+            try {
+                const userId = document.getElementById('userId').value;
+                
+                if (userId && connection) {
+                    log(`Leaving user group: user-${userId}`, 'info');
+                    await connection.invoke('LeaveUserGroup', parseInt(userId));
+                }
+
+                log('Disconnecting...', 'info');
+                await connection.stop();
+                log('✅ Disconnected successfully', 'success');
+                updateStatus('Disconnected', 'disconnected');
+                updateButtons(false);
+            } catch (err) {
+                log(`❌ Disconnect error: ${err.message}`, 'error');
+            }
+        }
+
+        async function sendNotification() {
+            try {
+                const targetUserId = parseInt(document.getElementById('targetUserId').value);
+                const message = document.getElementById('message').value;
+                const type = document.getElementById('notifType').value;
+
+                if (!message) {
+                    alert('Please enter a message');
+                    return;
+                }
+
+                log(`Sending notification to user ${targetUserId}...`, 'info');
+                await connection.invoke('SendNotificationToUser', targetUserId, message, type);
+                log(`✅ Notification sent successfully`, 'success');
+            } catch (err) {
+                log(`❌ Send error: ${err.message}`, 'error');
+            }
+        }
+
+        function clearLogs() {
+            document.getElementById('logs').innerHTML = '<div class="log-entry log-info">Logs cleared.</div>';
+        }
+
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', () => {
+            if (connection) {
+                connection.stop();
+            }
+        });
+    </script>
+</body>
+</html>
+

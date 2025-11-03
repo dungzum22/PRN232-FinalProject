@@ -2,6 +2,11 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using AuthAPI.Models;
+
+using AuthAPI.Services;
+using Microsoft.Extensions.DependencyInjection;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +19,8 @@ var secretKey = Encoding.ASCII.GetBytes(jwtSettings["Secret"] ?? "your-secret-ke
 
 // Database
 builder.Services.AddDbContext<AuthDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"),
+        npg => npg.MigrationsHistoryTable("__EFMigrationsHistory_Auth"))
 );
 
 // Authentication
@@ -82,7 +88,43 @@ app.MapGet("/health", () => new { status = "OK", timestamp = DateTime.UtcNow })
 
 // ==================== RUN ====================
 
+// Apply EF Core migrations at startup
+try
+{
+    using var scope = app.Services.CreateScope();
+    var db = scope.ServiceProvider.GetRequiredService<AuthDbContext>();
+    db.Database.Migrate();
+    
+    // Seed admin account
+    var passwordService = scope.ServiceProvider.GetRequiredService<IPasswordService>();
+    SeedAdminAccount(db, passwordService);
+}
+catch { }
+
 app.Run();
+
+// ==================== SEED METHOD ====================
+
+void SeedAdminAccount(AuthDbContext db, IPasswordService passwordService)
+{
+    if (db.Users.Any(u => u.Email == "admin@bakery.com"))
+        return;
+
+    var adminUser = new User
+    {
+        Email = "admin@bakery.com",
+        FullName = "Admin User",
+        PasswordHash = passwordService.HashPassword("Admin@123"),
+        DateOfBirth = new DateTime(2000, 1, 1),
+        Role = "admin",
+        IsActive = true,
+        CreatedAt = DateTime.UtcNow,
+        UpdatedAt = DateTime.UtcNow
+    };
+
+    db.Users.Add(adminUser);
+    db.SaveChanges();
+}
 
 // ==================== DATABASE CONTEXT ====================
 
@@ -113,3 +155,6 @@ public class AuthDbContext : DbContext
         });
     }
 }
+
+
+

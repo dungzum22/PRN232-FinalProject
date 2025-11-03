@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using ProductAndCategoryAPI.Data;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +16,8 @@ var secretKey = Encoding.ASCII.GetBytes(jwtSettings["Secret"] ?? "your-secret-ke
 
 // Database
 builder.Services.AddDbContext<ProductDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"),
+        npg => npg.MigrationsHistoryTable("__EFMigrationsHistory_Product"))
 );
 
 // Authentication
@@ -78,4 +80,16 @@ app.MapGet("/health", () => new { status = "OK", service = "ProductAndCategoryAP
 
 // ==================== RUN ====================
 
+// Apply EF Core migrations at startup
+try
+{
+    using var scope = app.Services.CreateScope();
+    var db = scope.ServiceProvider.GetRequiredService<ProductDbContext>();
+    db.Database.Migrate();
+}
+catch { }
+
 app.Run();
+
+
+

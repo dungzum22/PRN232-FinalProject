@@ -47,3 +47,4 @@ public class OrderSummaryDTO
     public decimal TotalRevenue { get; set; }
     public Dictionary<string, int> OrdersByStatus { get; set; } = new();
 }
+

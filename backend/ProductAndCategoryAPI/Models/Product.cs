@@ -30,3 +30,6 @@ public class Product
     // Navigation
     public Category? Category { get; set; }
 }
+
+
+

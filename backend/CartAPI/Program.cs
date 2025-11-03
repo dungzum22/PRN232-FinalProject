@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using CartAPI.Data;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,7 +11,8 @@ var jwtSettings = builder.Configuration.GetSection("JwtSettings");
 var secretKey = Encoding.ASCII.GetBytes(jwtSettings["Secret"] ?? "your-secret-key-here");
 
 builder.Services.AddDbContext<CartDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"),
+        npg => npg.MigrationsHistoryTable("__EFMigrationsHistory_Cart"))
 );
 
 builder.Services.AddAuthentication(options =>
@@ -62,4 +64,16 @@ app.MapGet("/health", () => new { status = "OK", service = "CartAPI", timestamp 
     .WithName("Health")
     .WithOpenApi();
 
+// Apply EF Core migrations at startup
+try
+{
+    using var scope = app.Services.CreateScope();
+    var db = scope.ServiceProvider.GetRequiredService<CartDbContext>();
+    db.Database.Migrate();
+}
+catch { }
+
 app.Run();
+
+
+

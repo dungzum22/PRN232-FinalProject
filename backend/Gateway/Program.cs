@@ -24,7 +24,6 @@ builder.Services.AddCors(options =>
 
 // Add API documentation
 builder.Services.AddSwaggerGen();
-builder.Services.AddSwaggerForOcelot(builder.Configuration);
 
 // ==================== MIDDLEWARE ====================
 
@@ -52,3 +51,6 @@ app.MapGet("/health", () => new { status = "OK", service = "Gateway", timestamp 
 await app.UseOcelot();
 
 app.Run();
+
+
+

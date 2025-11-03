@@ -17,9 +17,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.0" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.0" />
-    <PackageReference Include="HttpClientFactory" Version="4.3.4" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,3 +26,6 @@
   </ItemGroup>
 
 </Project>
+
+
+

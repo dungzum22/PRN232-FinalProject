@@ -75,3 +75,6 @@ EXPOSE 8080
 # Override this when running specific services
 COPY --from=publish-gateway /app/publish-gateway .
 ENTRYPOINT ["dotnet", "Gateway.dll"]
+
+
+

@@ -37,3 +37,4 @@ public class CartSummaryDTO
     public int ItemCount { get; set; }
     public decimal TotalPrice { get; set; }
 }
+
